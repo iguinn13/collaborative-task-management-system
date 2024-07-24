@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { UserInMemoryRepository } from './user-in-memory.repository';
+import { UserInMemoryRepository } from './in-memory/user-in-memory.repository';
 
 @Module({
     providers: [
