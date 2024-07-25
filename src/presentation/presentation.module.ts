@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 
 import { UseCasesModule } from 'src/application/use-cases/use-cases.module';
+
 import { CreateUserController } from './controllers/create-user.controller';
+import { CreateProjectController } from './controllers/create-project.controller';
 import { AuthenticateUserController } from './controllers/authenticate-user.controller';
 
 @Module({
@@ -10,6 +12,7 @@ import { AuthenticateUserController } from './controllers/authenticate-user.cont
     ],
     controllers: [
         CreateUserController,
+        CreateProjectController,
         AuthenticateUserController,
     ],
 })

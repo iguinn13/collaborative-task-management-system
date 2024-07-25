@@ -11,6 +11,9 @@ import { RepositoriesModule } from 'src/infrastructure/database/repositories/rep
 import { IAccessTokenService } from '../services/access-token.service';
 import { IHashCryptographyService } from '../services/hash-cryptography.service';
 import { IUniqueIdentifierGeneratorService } from '../services/unique-identifier-generator.service';
+import { CreateProjectUseCase } from './create-project.use-case';
+import { IProjectRepository } from 'src/domain/repositories/project.repository';
+import { IProjectMemberRepository } from 'src/domain/repositories/project-member.repository';
 
 @Module({
     imports: [
@@ -40,9 +43,32 @@ import { IUniqueIdentifierGeneratorService } from '../services/unique-identifier
             },
             inject: ['IUserRepository', 'IAccessTokenService', 'IHashCryptographyService']
         },
+        {
+            provide: CreateProjectUseCase,
+            useFactory: (
+                userRepository: IUserRepository,
+                projectRepository: IProjectRepository,
+                projectMemberRepository: IProjectMemberRepository,
+                uniqueIdentifierGeneratorService: IUniqueIdentifierGeneratorService,
+            ) => {
+                return new CreateProjectUseCase(
+                    userRepository,
+                    projectRepository,
+                    projectMemberRepository,
+                    uniqueIdentifierGeneratorService,
+                );
+            },
+            inject: [
+                'IUserRepository',
+                'IProjectRepository',
+                'IProjectMemberRepository',
+                'IUniqueIdentifierGeneratorService',
+            ]
+        },
     ],
     exports: [
         CreateUserUseCase,
+        CreateProjectUseCase,
         AuthenticateUserUseCase,
     ]
 })
